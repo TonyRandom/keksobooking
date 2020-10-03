@@ -291,6 +291,75 @@ var fragment = document.createDocumentFragment();
 	.querySelector('.map__card'); // ПОЛУЧАЕТСЯ ЭТО ОБЪЯВЛЕНИЕ
 
 
+// по порядку задаю значения, но не добавляю никуда
+
+
+var hotelElement = hotelTemplate.cloneNode(true);
+
+//Выведите заголовок объявления offer.title в заголовок .popup__title
+var title = document.createElement('h3');
+title.classList.add('popup__title');
+title.textContent = similarHotels[1].offer.title;
+
+
+//Выведите адрес offer.address в блок .popup__text--address.
+var address = document.createElement('p');
+address.classList.add('popup__text--address');
+address.textContent = similarHotels[1].offer.address;
+
+//Выведите цену offer.price в блок .popup__text--price строкой вида {{offer.price}}₽/ночь. Например, 5200₽/ночь
+var price = document.createElement('p');
+price.classList.add('popup__text--price');
+price.textContent = similarHotels[1].offer.price + ' ₽/ночь';
+
+//В блок .popup__type выведите тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house, Дворец для palace.
+var type = document.createElement('p');
+type.classList.add('popup__type');
+var typeName = similarHotels[1].offer.type;
+if(typeName == 'flat'){
+	type.textContent ='Квартира';
+}
+if(typeName == 'bungalo'){
+	type.textContent ='Бунгало';
+}
+if(typeName == 'palace') {
+	type.textContent ='Дворец';
+}
+;
+
+
+/*Выведите количество гостей и комнат offer.rooms и offer.guests в блок .popup__text--capacity строкой
+вида {{offer.rooms}} комнаты для {{offer.guests}} гостей. Например,
+2 комнаты для 3 гостей.*/
+
+var capacity = document.createElement('p');
+capacity.classList.add('popup__text--capacity');
+capacity.textContent = similarHotels[1].offer.rooms + ' комната(ы) для ' + similarHotels[1].offer.guests + ' гост(я)ей';
+
+/*Время заезда и выезда offer.checkin и offer.checkout в блок .popup__text-
+-time строкой вида Заезд после {{offer.checkin}}, выезд до
+{{offer.checkout}}. Например, заезд после 14:00, выезд до 12:00.*/
+
+var time = document.createElement('p');
+time.classList.add('popup__text--time');
+time.textContent = 'Заезд после ' + similarHotels[1].offer.checkin + ', выезд до ' + similarHotels[1].offer.checkout ;
+
+// В список .popup__features выведите все доступные удобства в объявлении
+
+var features = document.createElement('ul');
+	features.classList.add('popup__features');
+var featureItems = similarHotels[1].offer.features.split(' '); // разбиваю строку на массив. в скобка что считается разделителем.
+for (var i = 0; i<featureItems.length-1; i++) { // -1 убирает пустую строку в конце
+	var featureItem = document.createElement('li');
+	featureItem.textContent = featureItems[i];
+	features.appendChild(featureItem);
+}
+	
+
+
+console.log(featureItems);
+console.log(features);
+
 
 /*
 //сначала СОЗДАЕМ ШАБЛОН и только потом вставляем отдельной функцией
