@@ -225,42 +225,209 @@ console.log(hotelsContainer);
 //На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива. 
 //Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
 
-
-// элемент, куда будем копировать разметку из шаблона
+// элемент, КУДА будем копировать разметку из шаблона
 var hotelPin = document.querySelector('.map__pin');
 console.log(hotelPin);
 
-//шаблон, который будем копировать.
-
-var hotelTemplate = document.querySelector('template')
+// ЭТО ПИН
+var pinTemplate = document.querySelector('template') 
 	.content
-	.querySelector('.map__card');
-
-console.log(hotelTemplate);
+	.querySelector('.map__pin');
 
 
-//вставляем шаблон
+
+// добавляю все это в функцию
+
+var generatePinFromTemplate = function (hotel) {
+
+	var hotelPinElement = pinTemplate.cloneNode(true);
+
+	hotelPinElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
+	hotelPinElement.style.left = renderRandomNumber(300, 900) + 'px';
+
+	var pinAvatar = hotelPinElement.querySelector('img');
+	
+	pinAvatar.src = 'img/avatars/user' + '0' + arrayPush(1, 8)[i] + '.png'; 
+	
+	pinAvatar.alt = TITLE_DATA[i];  
+	
+	
+	
+	return hotelPinElement;
+
+}
 
 
+//Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
+
+// ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
+
+var fragment = document.createDocumentFragment(); 
+    
+    for (var i = 0; i < similarHotels.length; i++) { 
+        var newPin = generatePinFromTemplate(similarHotels[i]);
+       
+
+        fragment.appendChild(newPin);
+    }
+
+    hotelsContainer.appendChild(fragment);
+
+
+/*.На основе первого по порядку элемента из сгенерированного массива и шаблона .map__card создайте DOM-элемент объявления, заполните его
+данными из объекта и вставьте полученный DOM-элемент
+
+в блок .map перед блоком.map__filters-container*/ 
+//Можно задать переменную для .map__filters-container перед которым надо вставить элементы. И затем вместо аппенд использовать бифор
+
+
+// map - КУДА ВСТАВЛЯТЬ
+
+
+//ШАБЛОН, КОТОРЫЙ БУДЕТ КОПИРОВАТЬ -- ЭТО ОБЪЯВЛЕНИЕ
+
+ var hotelTemplate = document.querySelector('template')
+	.content
+	.querySelector('.map__card'); // ПОЛУЧАЕТСЯ ЭТО ОБЪЯВЛЕНИЕ
+
+
+
+/*
+//сначала СОЗДАЕМ ШАБЛОН и только потом вставляем отдельной функцией
+
+var hotelElement = hotelTemplate.cloneNode(true);
+
+//задаю координаты
+hotelElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
+hotelElement.style.left = renderRandomNumber(300, 900) + 'px';
+
+//задаю изображение
+hotelElement.querySelector('.popup__avatar').src = 'img/avatars/user' + '0' + arrayPush(2, 8)[3] + '.png'; //адрес в разметке изменился
+
+hotelElement.querySelector('.popup__avatar').alt = TITLE_DATA[0]; //альт в разметке изменился
+
+
+hotelPin.appendChild(hotelElement);
+console.log(hotelPin); */
+
+
+
+// добавляю все это в функцию
+
+/* var generateHotelFromTemplate = function (hotel) {
+
+	var hotelElement = hotelTemplate.cloneNode(true);
+
+	hotelElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
+	hotelElement.style.left = renderRandomNumber(300, 900) + 'px';
+	
+	hotelElement.querySelector('.popup__avatar').src = 'img/avatars/user' + '0' + arrayPush(2, 8)[i] + '.png'; 
+	
+	hotelElement.querySelector('.popup__avatar').alt = TITLE_DATA[i]; 
+	
+	
+	
+	return hotelElement;
+
+}
+ */
+
+//Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
+
+// ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
+
+/* var fragment = document.createDocumentFragment(); 
+    
+    for (var i = 0; i < similarHotels.length; i++) { 
+        var newHotel = generateHotelFromTemplate(similarHotels[i]);
+       
+
+        fragment.appendChild(newHotel);
+    }
+
+    hotelsContainer.appendChild(fragment);
+
+
+
+/* hotelsContainer.appendChild(hotelPin);
+ */
+/* console.log(hotelsContainer); */
 
 	
 // цикл копирующий шаблон 8 раз
 
-for (var i = 0; i<similarHotels.length; i++) {
+/* for (var i = 0; i<similarHotels.length; i++) { */
 
-	var hotelElement = hotelTemplate.cloneNode(true);
-
-
-
-
+/* 	var hotelElement = hotelTemplate.cloneNode(true); // задаем элемент как копию шаблона
 
 	hotelPin.appendChild(hotelElement);
 
-	hotelPin.style="left: {{location.x}}px; top: {{location.y}}px;"
+	hotelTemplate.style.offsetTop = renderRandomNumber(100, 500);
+	hotelTemplate.style.offsetLeft = renderRandomNumber(300, 900);
+	
+	
 
-		hotelsContainer.appendChild(hotelPin);
+
+
+		hotelsContainer.appendChild(hotelPin); */
+/* } */
+
+
+//ФУНКЦИЯ ОТРИСОВКИ МАГА В ШАБЛОН
+
+/* var renderHotel = function (hotelsArray) {
+   
+	var hotelElement = hotelTemplate.cloneNode(true); // hotelElement- это копия шаблона
+	hotelElement.offsetTop = renderRandomNumber(130, 630);
+	hotelElement.offsetLeft = renderRandomNumber(300, 900);
+
+	var coat = wizardElement.querySelector('.wizard-coat')
+	coat.style.fill = wizardsData[i].coatColor;
+
+	var eyes = wizardElement.querySelector('.wizard-eyes')
+	eyes.style.fill = wizardsData[i].eyesColor;
+
+	/* similarListElement.appendChild(wizardElement); */
+
+	/* return wizardElement; */ 
+
+/* } */
+
+
+
+
+// создаем функцию добавления в верстку 
+
+/* var fragment = document.createDocumentFragment(); 
+
+for (var i = 0; i < wizardsData.length; i++) { 
+	var newWizard = renderWizard(wizardsData[i]);
+   
+
+	fragment.appendChild(newWizard);
 }
 
+similarListElement.appendChild(fragment);
+
+ */
 
 
 
+
+  /* *
+   * renderPins - Добавляет DOM-элементы 'Метка объявления' в блок '.map__pins'.
+   *
+   * @param  {Array} mapPins Массив DOM-элементов 'Метка объявления'.
+   */
+/*   var renderPins = function (mapPins) {
+    var fragment = document.createDocumentFragment(); */
+
+    // Размещает DOM-элементы 'Метка объявления' из массива mapPins во фрагменте 'fragment'
+  /*   mapPins.forEach(function (pin) {
+      fragment.appendChild(pin);
+    }); */
+
+    // Добавляет DOM-элементы 'Метка объявления' в блок '.map__pins'
+    /* pinsContainer.appendChild(fragment);
+  };
+ */
