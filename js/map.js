@@ -1,29 +1,27 @@
 
 /*Создайте массив, состоящий из 8 сгенерированных JS объектов, которые
-будут описывать похожие объявления неподалёку. Структура объектов
-должна быть следующей: */
+будут описывать похожие объявления неподалёку */
 
 // объявляю массив
 var similarHotels = [];
 
 //как забить массив заданными числовыми значениями
 
-var numbersArray = [];
-
 var arrayPush = function (min, max) {
 	var newArray = [];
   for (var i = min; i<= max; i++) {
     newArray.push(i);
-
   } 
     return newArray;
 }
+
+var numbersArray = arrayPush(1, 8);
+
 
 //функция возвращающая случайное число из заданного диапазона
 
 var renderRandomNumber = function (min, max) {
 	var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-
 	return randomNumber;
 	}
   
@@ -67,93 +65,13 @@ var pushRandomArrayItems = function (array) {
 
 
 // все данные, которые будем использовать.
-
 var TITLE_DATA = ["Большая уютная квартира", "Маленькая неуютная квартира", "Огромный прекрасный дворец", "Маленький ужасный дворец", "Красивый гостевой домик", "Некрасивый негостеприимный домик", "Уютное бунгало далеко от моря", "Неуютное бунгало по колено в воде"];
 var TYPE_DATA = ['palace', 'flat', 'house', 'bungalo'];
 var CHECKINOUT_DATA = ['12:00', '13:00', '14:00'];
 var FEATURES_DATA = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"]; // надо сделать массив строк случайной длины из ниже предложенных
 var PHOTOS_DATA = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
 
-// address ограничения для Х 300- 900 для Y 100 - 500.
 
-
-
-//по порядку сгенерируем каждое значение
-
-/* var avatar = 'img/avatars/user' + '0' + arrayPush(2, 8)[0] + '.png';
-
-var title = TITLE_DATA[0];
-
-var address = renderRandomNumber(300, 900) + ', ' + renderRandomNumber(100, 500); 
-
-var price = renderRandomNumber(1000, 1000000);
-
-var type = renderRandomArrayItem(TYPE_DATA);
-
-var rooms = renderRandomNumber(1, 5);
-
-var guests = renderRandomNumber(1, 10); //????????????????????????
-
-var checkin = renderRandomArrayItem(CHECKINOUT_DATA);
-
-var checkout = renderRandomArrayItem(CHECKINOUT_DATA);
-
-var features = pushRandomArrayItems(FEATURES_DATA);
-
-var description = '';
-
-var photos = shuffle(PHOTOS_DATA);
-
-var location = {
-	x: renderRandomNumber(300, 900),
-	y: renderRandomNumber(130, 630)
-}; */
-
-
-//ВСЕ ТОЖЕ САМОЕ ПРОПИСЫВАЮ ОБЪЕКТАМИ
-
-
-/* var author = {};
-var offer = {}; */
-
-var hotel = {
-
-author: {
-	avatar: 'img/avatars/user' + '0' + arrayPush(2, 8)[0] + '.png'
-},
-
-offer: {
-	title: shuffle(TITLE_DATA)[0],
-
-	address: renderRandomNumber(300, 900) + ', ' + renderRandomNumber(100, 500),
-
-	price: renderRandomNumber(1000, 1000000),
-
-	type: renderRandomArrayItem(TYPE_DATA),
-
-	rooms: renderRandomNumber(1, 5),
-
-	guests: renderRandomNumber(1, 10), //????????????????????????
-
-	checkin: renderRandomArrayItem(CHECKINOUT_DATA),
-
-	checkout: renderRandomArrayItem(CHECKINOUT_DATA),
-
-	features: pushRandomArrayItems(FEATURES_DATA),
-
-	description: '',
-
-	photos: shuffle(PHOTOS_DATA),
-
-	location: {
-		x: renderRandomNumber(300, 900),
-		y: renderRandomNumber(130, 630)
-	}
-}
-
-}
-
-console.log(hotel);
 
 
  
@@ -165,7 +83,7 @@ var generateHotelsArray = function () {
 for (var i = 0; i < 8; i++) {
 	similarObject = {
 	author: {
-		avatar: 'img/avatars/user' + '0' + arrayPush(1, 8)[i] + '.png'
+		avatar: 'img/avatars/user' + '0' + numbersArray[i] + '.png'
 	},
 	
 	offer: {
@@ -207,8 +125,10 @@ similarHotels.push(similarObject);
 
 }
 
-generateHotelsArray();
+similarHotels = generateHotelsArray();
 console.log(similarHotels);
+
+//ПОЧЕМУ 16
 
 
 
@@ -218,7 +138,7 @@ console.log(similarHotels);
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-//map__pins - куда вставлять все элементы
+//map__pins - куда вставлять все ПИНы
 var hotelsContainer = document.querySelector('.map__pins');
 console.log(hotelsContainer);
 
@@ -235,7 +155,6 @@ var pinTemplate = document.querySelector('template')
 	.querySelector('.map__pin');
 
 
-
 // добавляю все это в функцию
 
 var generatePinFromTemplate = function (hotel) {
@@ -247,7 +166,7 @@ var generatePinFromTemplate = function (hotel) {
 
 	var pinAvatar = hotelPinElement.querySelector('img');
 	
-	pinAvatar.src = 'img/avatars/user' + '0' + arrayPush(1, 8)[i] + '.png'; 
+	pinAvatar.src = 'img/avatars/user' + '0' + numbersArray[i] + '.png'; 
 	
 	pinAvatar.alt = TITLE_DATA[i];  
 	
@@ -274,7 +193,21 @@ var fragment = document.createDocumentFragment();
     hotelsContainer.appendChild(fragment);
 
 
-/*.На основе первого по порядку элемента из сгенерированного массива и шаблона .map__card создайте DOM-элемент объявления, заполните его
+
+
+
+
+
+
+
+
+// ОБЪЯВЛЕНИЯ
+
+
+
+
+
+/*.На основе ПЕРВОГО по порядку элемента ИЗ СГЕНЕРИРОВАННОГО МАССИВА и шаблона .map__card создайте DOM-элемент объявления, заполните его
 данными из объекта и вставьте полученный DOM-элемент
 
 в блок .map перед блоком.map__filters-container*/ 
@@ -283,12 +216,15 @@ var fragment = document.createDocumentFragment();
 
 // map - КУДА ВСТАВЛЯТЬ
 
+var mapFilter= document.querySelector('.map__filters-container');
 
 //ШАБЛОН, КОТОРЫЙ БУДЕТ КОПИРОВАТЬ -- ЭТО ОБЪЯВЛЕНИЕ
 
  var hotelTemplate = document.querySelector('template')
 	.content
-	.querySelector('.map__card'); // ПОЛУЧАЕТСЯ ЭТО ОБЪЯВЛЕНИЕ
+	.querySelector('.map__card'); 
+
+
 
 
 // по порядку задаю значения, но не добавляю никуда
@@ -296,26 +232,24 @@ var fragment = document.createDocumentFragment();
 
 var hotelElement = hotelTemplate.cloneNode(true);
 
-//Выведите заголовок объявления offer.title в заголовок .popup__title
-var title = document.createElement('h3');
+var title = hotelElement.querySelector('h3');
 title.classList.add('popup__title');
-title.textContent = similarHotels[1].offer.title;
+title.textContent = similarHotels[0].offer.title;
 
 
-//Выведите адрес offer.address в блок .popup__text--address.
-var address = document.createElement('p');
+
+var address = hotelElement.querySelector('p').querySelector('small');
 address.classList.add('popup__text--address');
-address.textContent = similarHotels[1].offer.address;
+address.textContent = similarHotels[0].offer.address;
 
-//Выведите цену offer.price в блок .popup__text--price строкой вида {{offer.price}}₽/ночь. Например, 5200₽/ночь
-var price = document.createElement('p');
+var price = hotelElement.querySelector('.popup__price');
 price.classList.add('popup__text--price');
-price.textContent = similarHotels[1].offer.price + ' ₽/ночь';
+price.textContent = similarHotels[0].offer.price + ' ₽/ночь';
 
-//В блок .popup__type выведите тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house, Дворец для palace.
-var type = document.createElement('p');
+
+var type = hotelElement.querySelector('h4');
 type.classList.add('popup__type');
-var typeName = similarHotels[1].offer.type;
+var typeName = similarHotels[0].offer.type;
 if(typeName == 'flat'){
 	type.textContent ='Квартира';
 }
@@ -328,175 +262,98 @@ if(typeName == 'palace') {
 ;
 
 
-/*Выведите количество гостей и комнат offer.rooms и offer.guests в блок .popup__text--capacity строкой
-вида {{offer.rooms}} комнаты для {{offer.guests}} гостей. Например,
-2 комнаты для 3 гостей.*/
-
-var capacity = document.createElement('p');
+var capacity = hotelElement.querySelector('p:nth-of-type(3)');
 capacity.classList.add('popup__text--capacity');
-capacity.textContent = similarHotels[1].offer.rooms + ' комната(ы) для ' + similarHotels[1].offer.guests + ' гост(я)ей';
+capacity.textContent = similarHotels[0].offer.rooms + ' комната(ы) для ' + similarHotels[0].offer.guests + ' гост(я)ей';
 
-/*Время заезда и выезда offer.checkin и offer.checkout в блок .popup__text-
--time строкой вида Заезд после {{offer.checkin}}, выезд до
-{{offer.checkout}}. Например, заезд после 14:00, выезд до 12:00.*/
 
-var time = document.createElement('p');
+var time = hotelElement.querySelector('p:nth-of-type(4)');
 time.classList.add('popup__text--time');
-time.textContent = 'Заезд после ' + similarHotels[1].offer.checkin + ', выезд до ' + similarHotels[1].offer.checkout ;
-
-// В список .popup__features выведите все доступные удобства в объявлении
-
-var features = document.createElement('ul');
-	features.classList.add('popup__features');
-var featureItems = similarHotels[1].offer.features.split(' '); // разбиваю строку на массив. в скобка что считается разделителем.
-for (var i = 0; i<featureItems.length-1; i++) { // -1 убирает пустую строку в конце
-	var featureItem = document.createElement('li');
-	featureItem.textContent = featureItems[i];
-	features.appendChild(featureItem);
-}
-	
+time.textContent = 'Заезд после ' + similarHotels[0].offer.checkin + ', выезд до ' + similarHotels[0].offer.checkout ;
 
 
+
+/* в шаблоне уже есть список с классами. сделать проверку, если в массиве нет значения Н, то удалить класс Н
+*/
+
+var popupFeatures = hotelElement.querySelector('.popup__features'); // нашел УЛ
+
+
+var featureItems = similarHotels[0].offer.features.split(' '); //выводится массив со случайными значениями 
 console.log(featureItems);
-console.log(features);
 
+//сматчить каждый элемент из списка ул
 
-/*
-//сначала СОЗДАЕМ ШАБЛОН и только потом вставляем отдельной функцией
+var wifiFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(1)');
+var dishwasherFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(2)');
+var parkingFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(3)');
+var washerFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(4)');
+var elevatorFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(5)');
+var conditionerFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(6)');
 
-var hotelElement = hotelTemplate.cloneNode(true);
+console.log(wifiFeature);
 
-//задаю координаты
-hotelElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
-hotelElement.style.left = renderRandomNumber(300, 900) + 'px';
+if (featureItems.indexOf('wifi') == -1) {
 
-//задаю изображение
-hotelElement.querySelector('.popup__avatar').src = 'img/avatars/user' + '0' + arrayPush(2, 8)[3] + '.png'; //адрес в разметке изменился
-
-hotelElement.querySelector('.popup__avatar').alt = TITLE_DATA[0]; //альт в разметке изменился
-
-
-hotelPin.appendChild(hotelElement);
-console.log(hotelPin); */
-
-
-
-// добавляю все это в функцию
-
-/* var generateHotelFromTemplate = function (hotel) {
-
-	var hotelElement = hotelTemplate.cloneNode(true);
-
-	hotelElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
-	hotelElement.style.left = renderRandomNumber(300, 900) + 'px';
-	
-	hotelElement.querySelector('.popup__avatar').src = 'img/avatars/user' + '0' + arrayPush(2, 8)[i] + '.png'; 
-	
-	hotelElement.querySelector('.popup__avatar').alt = TITLE_DATA[i]; 
-	
-	
-	
-	return hotelElement;
-
-}
- */
-
-//Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
-
-// ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
-
-/* var fragment = document.createDocumentFragment(); 
-    
-    for (var i = 0; i < similarHotels.length; i++) { 
-        var newHotel = generateHotelFromTemplate(similarHotels[i]);
-       
-
-        fragment.appendChild(newHotel);
-    }
-
-    hotelsContainer.appendChild(fragment);
-
-
-
-/* hotelsContainer.appendChild(hotelPin);
- */
-/* console.log(hotelsContainer); */
-
-	
-// цикл копирующий шаблон 8 раз
-
-/* for (var i = 0; i<similarHotels.length; i++) { */
-
-/* 	var hotelElement = hotelTemplate.cloneNode(true); // задаем элемент как копию шаблона
-
-	hotelPin.appendChild(hotelElement);
-
-	hotelTemplate.style.offsetTop = renderRandomNumber(100, 500);
-	hotelTemplate.style.offsetLeft = renderRandomNumber(300, 900);
-	
-	
-
-
-
-		hotelsContainer.appendChild(hotelPin); */
-/* } */
-
-
-//ФУНКЦИЯ ОТРИСОВКИ МАГА В ШАБЛОН
-
-/* var renderHotel = function (hotelsArray) {
-   
-	var hotelElement = hotelTemplate.cloneNode(true); // hotelElement- это копия шаблона
-	hotelElement.offsetTop = renderRandomNumber(130, 630);
-	hotelElement.offsetLeft = renderRandomNumber(300, 900);
-
-	var coat = wizardElement.querySelector('.wizard-coat')
-	coat.style.fill = wizardsData[i].coatColor;
-
-	var eyes = wizardElement.querySelector('.wizard-eyes')
-	eyes.style.fill = wizardsData[i].eyesColor;
-
-	/* similarListElement.appendChild(wizardElement); */
-
-	/* return wizardElement; */ 
-
-/* } */
-
-
-
-
-// создаем функцию добавления в верстку 
-
-/* var fragment = document.createDocumentFragment(); 
-
-for (var i = 0; i < wizardsData.length; i++) { 
-	var newWizard = renderWizard(wizardsData[i]);
-   
-
-	fragment.appendChild(newWizard);
+	popupFeatures.removeChild(wifiFeature);
 }
 
-similarListElement.appendChild(fragment);
+if (featureItems.indexOf('dishwasher') == -1) {
 
- */
+	popupFeatures.removeChild(dishwasherFeature);
+}
+
+if (featureItems.indexOf('parking') == -1) {
+
+	popupFeatures.removeChild(parkingFeature);
+}
+
+if (featureItems.indexOf('washer') == -1) {
+
+	popupFeatures.removeChild(washerFeature);
+}
+
+if (featureItems.indexOf('elevator') == -1) {
+
+	popupFeatures.removeChild(elevatorFeature);
+}
+
+if (featureItems.indexOf('conditioner') == -1) {
+
+	popupFeatures.removeChild(conditionerFeature);
+}
+
+
+
+var popupDescription = hotelElement.querySelector('p:nth-of-type(5)');
+popupDescription.classList.add('.popup__description');
+popupDescription.textContent = similarHotels[0].offer.description;
+
+
+var popupPhotos = hotelElement.querySelector('.popup__pictures');
+popupPhotos.classList.add('.popup__photos');
+
+popupPhotos.querySelector('li:nth-child(1)').querySelector('img').src = similarHotels[0].offer.photos[0];
+
+popupPhotos.querySelector('li:nth-child(1)').querySelector('img').classList.add('popupPhoto');
+popupPhotos.querySelector('li:nth-child(2)').querySelector('img').src = similarHotels[0].offer.photos[1];
+popupPhotos.querySelector('li:nth-child(2)').querySelector('img').classList.add('popupPhoto');
+popupPhotos.querySelector('li:nth-child(3)').querySelector('img').src = similarHotels[0].offer.photos[2];
+popupPhotos.querySelector('li:nth-child(3)').querySelector('img').classList.add('popupPhoto');
+
+popupPhotos.querySelector('.popupPhoto').naturalWidth = 10;
+
+var popupAvatar = hotelElement.querySelector('img');
+popupAvatar.src = similarHotels[0].author.avatar;
+
+
+//выводим окно
+map.insertBefore(hotelElement, mapFilter);
 
 
 
 
-  /* *
-   * renderPins - Добавляет DOM-элементы 'Метка объявления' в блок '.map__pins'.
-   *
-   * @param  {Array} mapPins Массив DOM-элементов 'Метка объявления'.
-   */
-/*   var renderPins = function (mapPins) {
-    var fragment = document.createDocumentFragment(); */
 
-    // Размещает DOM-элементы 'Метка объявления' из массива mapPins во фрагменте 'fragment'
-  /*   mapPins.forEach(function (pin) {
-      fragment.appendChild(pin);
-    }); */
 
-    // Добавляет DOM-элементы 'Метка объявления' в блок '.map__pins'
-    /* pinsContainer.appendChild(fragment);
-  };
- */
+
+
