@@ -136,7 +136,7 @@ console.log(similarHotels);
 
 // 2 ЗАДАНИЕ
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+/* map.classList.remove('map--faded'); */
 
 //map__pins - куда вставлять все ПИНы
 var hotelsContainer = document.querySelector('.map__pins');
@@ -354,6 +354,54 @@ map.insertBefore(hotelElement, mapFilter);
 
 
 
+//ЗАДАНИЕ 4
+
+/* Первое действие, которое нужно выполнить, перед тем, как приступить к этому
+заданию, вернуть страницу в исходное состояние */
+
+//добавить класс .map--faded. я просто в комментарии убрал в начале кода
+
+console.log(map);
 
 
+/* Еще нужно не забыть проверить пункт ТЗ, указывающий на то, что поля формы
+должны быть неактивны в исходном состоянии. В разметке проекта поля активны,
+поэтому их нужно отключить, т.е. добавить через DOM-операции или самим полям
+или fieldset которые их содержат, атрибут disabled. */
 
+//добавил в верстке. удалять все равно потом через ДжиЭс
+
+/* 1. Активация страницы
+Страница Букинга может находиться в двух режимах: неактивном и активном.
+В неактивном режиме страница находится сразу после открытия. В этом режиме
+отключены форма и карта и единственное действие, которое можно выполнить
+со страницей — перетащить метку адреса. Первое перетаскивание метки
+переводит страницу в активный режим.
+Перетаскивание метки — это тема домашнего задания из следующего раздела,
+поэтому в этом разделе мы только сэмулируем перетаскивание. Любое
+перетаскивание состоит из трёх фаз: захвата элемента, его перемещения
+и отпускания элемента. На данном этапе нам достаточно описать реакцию
+на третью фазу: отпускание элемента. Для этого нужно добавить обработчик
+события mouseup на элемент .map__pin--main.
+Обработчик события mouseup должен вызывать функцию, которая будет отменять
+изменения DOM-элементов, описанные в пункте «Неактивное состояние»
+технического задания. */
+
+//почему то в моем шаблоне notice__form вместо ад форм
+
+var noticeForm = document.querySelector('.notice__form');
+var formElements = noticeForm.querySelectorAll('.form__element');
+console.log(formElements);
+
+var activateMap = function () {
+	map.classList.remove('map--faded');
+	noticeForm.classList.remove('notice__form--disabled');
+	document.querySelector('.notice__header').removeAttribute('disabled');
+
+	for (var i = 0; i<formElements.length; i++) {
+		formElements[i].disabled=false;
+	}
+}
+
+var mapPin= document.querySelector('.map__pin--main');
+mapPin.addEventListener('mouseup', activateMap);
