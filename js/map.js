@@ -494,9 +494,6 @@ var MAIN_PIN_LOCATION__ACTIVE = {
 
 var addressField = document.querySelector('#address');
 addressField.value = MAIN_PIN_LOCATION.x + ", " + MAIN_PIN_LOCATION.y;
-console.log(addressField);
-
-
 
 /* СДЕЛАНО Перемещение метки приводит к заполнению поля адреса. Поэтому в обработчике события mouseup на элементе метки, кроме вызова метода, переводящего страницу в активное состояние, должен находиться вызов метода, который устанавливает значения поля ввода адреса. 
 
@@ -511,3 +508,107 @@ addressField.value = (event.clientX + pageXOffset + PIN_WIDTH) +”, ” + (even
 
 СДЕЛАНО поле адреса должно быть заполнено всегда, даже сразу после открытия страницы. Мы можем взять за исходное значение поля адреса середину метки. А при «перетаскивании» значение поля изменится на то, на которое будет указывать острый конец метки.
  */
+
+
+
+ //ФОРМА
+
+
+ //расставить реквайред
+ //проверить типы
+ // ограничения в разметке
+
+ var priceField = document.querySelector('#price');
+var houseTypeField = document.querySelector('#type');
+
+houseTypeField.addEventListener('change', function () {
+	if (houseTypeField.value === 'house') {
+		priceField.min = 5000;
+	}
+	if (houseTypeField.value === 'flat') {
+		priceField.min = 1000;
+	}
+	if (houseTypeField.value === 'bungalo') {
+		priceField.min = 0;
+	}
+	
+	if (houseTypeField.value === 'palace') {
+		priceField.min = 10000;
+	}
+
+})
+
+//синхронизация времени заезда
+
+var timeInField = document.querySelector('#timein');
+var timeOutField = document.querySelector('#timeout');
+
+
+timeInField.addEventListener('change', function () {
+	if (timeInField.selectedIndex === 0) {
+		timeOutField.selectedIndex = 0;
+	}
+	if (timeInField.selectedIndex === 1) {
+		timeOutField.selectedIndex = 1;
+	}
+	if (timeInField.selectedIndex === 2) {
+		timeOutField.selectedIndex = 2;
+	}
+})
+
+timeOutField.addEventListener('change', function () {
+	if (timeOutField.selectedIndex === 0) {
+		timeInField.selectedIndex = 0;
+	}
+	if (timeOutField.selectedIndex === 1) {
+		timeInField.selectedIndex = 1;
+	}
+	if (timeOutField.selectedIndex === 2) {
+		timeInField.selectedIndex = 2;
+	}
+})
+
+//. Поле «Количество комнат» синхронизировано с полем «Количество мест»
+
+var roomNumberField = document.querySelector('#room_number');
+var capacityField = document.querySelector('#capacity');
+
+/* capacityField.options[0].removeAttribute('selected'); */
+
+//задать вместимость для одной комнаты по умолчанию. так как количеством меняется только по  клику на первый 
+	capacityField.options[0].disabled= true;
+	capacityField.options[1].disabled= true;
+	capacityField.options[2].disabled= false;
+	capacityField.options[3].disabled= true;
+
+
+roomNumberField.addEventListener('click', function () {
+
+	if (roomNumberField.selectedIndex == 0) {
+		
+		capacityField.options[0].disabled= true;
+		capacityField.options[1].disabled= true;
+		capacityField.options[2].disabled= false;
+		capacityField.options[3].disabled= true;
+	}
+	if (roomNumberField.selectedIndex == 1) {
+		capacityField.options[0].disabled= true;
+		capacityField.options[1].disabled= false;
+		capacityField.options[2].disabled= false;
+		capacityField.options[3].disabled= true;
+	}
+		
+	if (roomNumberField.selectedIndex == 2) {
+		capacityField.options[0].disabled= false;
+		capacityField.options[1].disabled= false;
+		capacityField.options[2].disabled= false;
+		capacityField.options[3].disabled= true;
+	}
+	if (roomNumberField.selectedIndex === 3) {
+		capacityField.options[0].disabled= true;
+		capacityField.options[1].disabled= true;
+		capacityField.options[2].disabled= true;
+		capacityField.options[3].disabled= false;
+	}
+});
+
