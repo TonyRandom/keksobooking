@@ -72,8 +72,6 @@ var FEATURES_DATA = ["wifi", "dishwasher", "parking", "washer", "elevator", "con
 var PHOTOS_DATA = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
 
 
-
-
  
 //создадим функцию создания объектов с такими данными.
 
@@ -128,8 +126,6 @@ similarHotels.push(similarObject);
 similarHotels = generateHotelsArray();
 console.log(similarHotels);
 
-//ПОЧЕМУ 16
-
 
 
 
@@ -140,14 +136,12 @@ var map = document.querySelector('.map');
 
 //map__pins - куда вставлять все ПИНы
 var hotelsContainer = document.querySelector('.map__pins');
-console.log(hotelsContainer);
 
 //На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива. 
 //Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
 
 // элемент, КУДА будем копировать разметку из шаблона
 var hotelPin = document.querySelector('.map__pin');
-console.log(hotelPin);
 
 // ЭТО ПИН
 var pinTemplate = document.querySelector('template') 
@@ -160,31 +154,30 @@ var pinTemplate = document.querySelector('template')
 var generatePinFromTemplate = function (hotel) {
 
 	var hotelPinElement = pinTemplate.cloneNode(true);
-
 	hotelPinElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
 	hotelPinElement.style.left = renderRandomNumber(300, 900) + 'px';
 
 	var pinAvatar = hotelPinElement.querySelector('img');
 	
-	pinAvatar.src = 'img/avatars/user' + '0' + numbersArray[i] + '.png'; 
+	pinAvatar.src = hotel.author.avatar; 
 	
-	pinAvatar.alt = TITLE_DATA[i];  
+	pinAvatar.alt = hotel.offer.description;  
 	
 	
 	
 	return hotelPinElement;
-
 }
-
 
 //Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
 
 // ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
 
-var fragment = document.createDocumentFragment(); 
+	var insertMapPins = function () {
+		var fragment = document.createDocumentFragment(); 
     
     for (var i = 0; i < similarHotels.length; i++) { 
-        var newPin = generatePinFromTemplate(similarHotels[i]);
+		var newPin = generatePinFromTemplate(similarHotels[i]);
+		newPin.classList.add('pin--'+ i);
        
 
         fragment.appendChild(newPin);
@@ -192,6 +185,28 @@ var fragment = document.createDocumentFragment();
 
     hotelsContainer.appendChild(fragment);
 
+	};
+
+	
+	insertMapPins(); // отрисовываю метки
+
+// функции скрытия и показа отрисованных меток
+
+var hideMapPins = function () {
+	var mapPins = document.querySelectorAll('.map__pin');
+	for (var i = 1; i <= similarHotels.length; i++ ) {
+		mapPins[i].classList.add('hidden'); 
+	}
+}
+
+hideMapPins();
+
+var showMapPins = function () {
+	var mapPins = document.querySelectorAll('.map__pin');
+	for (var i = 1; i <= similarHotels.length; i++ ) {
+		mapPins[i].classList.remove('hidden'); 
+	}
+}
 
 
 
@@ -229,27 +244,30 @@ var mapFilter= document.querySelector('.map__filters-container');
 
 // по порядку задаю значения, но не добавляю никуда
 
+//создать функцию генерации объявления
 
-var hotelElement = hotelTemplate.cloneNode(true);
+var generateAd = function (hotel) {
 
-var title = hotelElement.querySelector('h3');
+	var hotelElement = hotelTemplate.cloneNode(true);
+
+	var title = hotelElement.querySelector('h3');
 title.classList.add('popup__title');
-title.textContent = similarHotels[0].offer.title;
+title.textContent = hotel.offer.title;
 
 
 
 var address = hotelElement.querySelector('p').querySelector('small');
 address.classList.add('popup__text--address');
-address.textContent = similarHotels[0].offer.address;
+address.textContent = hotel.offer.address;
 
 var price = hotelElement.querySelector('.popup__price');
 price.classList.add('popup__text--price');
-price.textContent = similarHotels[0].offer.price + ' ₽/ночь';
+price.textContent = hotel.offer.price + ' ₽/ночь';
 
 
 var type = hotelElement.querySelector('h4');
 type.classList.add('popup__type');
-var typeName = similarHotels[0].offer.type;
+var typeName = hotel.offer.type;
 if(typeName == 'flat'){
 	type.textContent ='Квартира';
 }
@@ -264,12 +282,12 @@ if(typeName == 'palace') {
 
 var capacity = hotelElement.querySelector('p:nth-of-type(3)');
 capacity.classList.add('popup__text--capacity');
-capacity.textContent = similarHotels[0].offer.rooms + ' комната(ы) для ' + similarHotels[0].offer.guests + ' гост(я)ей';
+capacity.textContent = hotel.offer.rooms + ' комната(ы) для ' + hotel.offer.guests + ' гост(я)ей';
 
 
 var time = hotelElement.querySelector('p:nth-of-type(4)');
 time.classList.add('popup__text--time');
-time.textContent = 'Заезд после ' + similarHotels[0].offer.checkin + ', выезд до ' + similarHotels[0].offer.checkout ;
+time.textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout ;
 
 
 
@@ -279,8 +297,7 @@ time.textContent = 'Заезд после ' + similarHotels[0].offer.checkin + '
 var popupFeatures = hotelElement.querySelector('.popup__features'); // нашел УЛ
 
 
-var featureItems = similarHotels[0].offer.features.split(' '); //выводится массив со случайными значениями 
-console.log(featureItems);
+var featureItems = hotel.offer.features.split(' '); //выводится массив со случайными значениями 
 
 //сматчить каждый элемент из списка ул
 
@@ -290,8 +307,6 @@ var parkingFeature = hotelElement.querySelector('.popup__features').querySelecto
 var washerFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(4)');
 var elevatorFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(5)');
 var conditionerFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(6)');
-
-console.log(wifiFeature);
 
 if (featureItems.indexOf('wifi') == -1) {
 
@@ -327,34 +342,43 @@ if (featureItems.indexOf('conditioner') == -1) {
 
 var popupDescription = hotelElement.querySelector('p:nth-of-type(5)');
 popupDescription.classList.add('.popup__description');
-popupDescription.textContent = similarHotels[0].offer.description;
+popupDescription.textContent = hotel.offer.description;
 
 
 var popupPhotos = hotelElement.querySelector('.popup__pictures');
 popupPhotos.classList.add('.popup__photos');
 
-popupPhotos.querySelector('li:nth-child(1)').querySelector('img').src = similarHotels[0].offer.photos[0];
+popupPhotos.querySelector('li:nth-child(1)').querySelector('img').src = hotel.offer.photos[0];
 
 popupPhotos.querySelector('li:nth-child(1)').querySelector('img').classList.add('popupPhoto');
-popupPhotos.querySelector('li:nth-child(2)').querySelector('img').src = similarHotels[0].offer.photos[1];
+popupPhotos.querySelector('li:nth-child(2)').querySelector('img').src = hotel.offer.photos[1];
 popupPhotos.querySelector('li:nth-child(2)').querySelector('img').classList.add('popupPhoto');
-popupPhotos.querySelector('li:nth-child(3)').querySelector('img').src = similarHotels[0].offer.photos[2];
+popupPhotos.querySelector('li:nth-child(3)').querySelector('img').src = hotel.offer.photos[2];
 popupPhotos.querySelector('li:nth-child(3)').querySelector('img').classList.add('popupPhoto');
 
 popupPhotos.querySelector('.popupPhoto').naturalWidth = 10;
 
 var popupAvatar = hotelElement.querySelector('img');
-popupAvatar.src = similarHotels[0].author.avatar;
+popupAvatar.src = hotel.author.avatar;
+
+return hotelElement;
+
+};
+
+console.log(similarHotels[2]);
+console.log(generateAd(similarHotels[2]));
 
 
-//выводим окно
-map.insertBefore(hotelElement, mapFilter);
+
+//выводим окно когда кликнут по МЕТКЕ СКОПИРУЮ ЭТО В СОБЫТИЕ КЛИКА
+/* map.insertBefore(hotelElement, mapFilter); */
 
 
 
 
 
 //ЗАДАНИЕ 4
+//АКТИВАЦИЯ страницы. по клику должна активироваться карта, появится метки, поле формы стать активным, адрес должен заполнится. и надо потом добавить проверку формы.
 
 /* Первое действие, которое нужно выполнить, перед тем, как приступить к этому
 заданию, вернуть страницу в исходное состояние */
@@ -364,24 +388,13 @@ map.insertBefore(hotelElement, mapFilter);
 console.log(map);
 
 
-/* Еще нужно не забыть проверить пункт ТЗ, указывающий на то, что поля формы
-должны быть неактивны в исходном состоянии. В разметке проекта поля активны,
-поэтому их нужно отключить, т.е. добавить через DOM-операции или самим полям
-или fieldset которые их содержат, атрибут disabled. */
+/* поля формы должны быть неактивны в исходном состоянии. */
 
 //добавил в верстке. удалять все равно потом через ДжиЭс
 
 /* 1. Активация страницы
-Страница Букинга может находиться в двух режимах: неактивном и активном.
-В неактивном режиме страница находится сразу после открытия. В этом режиме
-отключены форма и карта и единственное действие, которое можно выполнить
-со страницей — перетащить метку адреса. Первое перетаскивание метки
-переводит страницу в активный режим.
-Перетаскивание метки — это тема домашнего задания из следующего раздела,
-поэтому в этом разделе мы только сэмулируем перетаскивание. Любое
-перетаскивание состоит из трёх фаз: захвата элемента, его перемещения
-и отпускания элемента. На данном этапе нам достаточно описать реакцию
-на третью фазу: отпускание элемента. Для этого нужно добавить обработчик
+
+Для этого нужно добавить обработчик
 события mouseup на элемент .map__pin--main.
 Обработчик события mouseup должен вызывать функцию, которая будет отменять
 изменения DOM-элементов, описанные в пункте «Неактивное состояние»
@@ -391,7 +404,6 @@ console.log(map);
 
 var noticeForm = document.querySelector('.notice__form');
 var formElements = noticeForm.querySelectorAll('.form__element');
-console.log(formElements);
 
 var activateMap = function () {
 	map.classList.remove('map--faded');
@@ -403,5 +415,99 @@ var activateMap = function () {
 	}
 }
 
-var mapPin= document.querySelector('.map__pin--main');
-mapPin.addEventListener('mouseup', activateMap);
+var mapPinMain= document.querySelector('.map__pin--main');
+mapPinMain.addEventListener('mouseup', function () {
+activateMap();
+showMapPins(); 
+addressField.value = MAIN_PIN_LOCATION__ACTIVE.x + ", " + MAIN_PIN_LOCATION__ACTIVE.y;
+}
+);
+
+// по клику на метки показывать страницу описания ДЕЛЕГИРОВАНИЕ
+
+// отлавливать клики по контейнеру 
+
+
+console.log(hotelsContainer);
+
+hotelsContainer.addEventListener('click', function (evt) {
+	var target = evt.target.closest('button'); //так клик показывает кнопку, даже если клик по изображению внутри кнопки
+	if (!target) { //чтобы только по кнопке срабатывал
+		return;}		
+	if (target.classList.contains('pin--0')) {
+		map.insertBefore(generateAd(similarHotels[0]), mapFilter);
+	} 
+	if (target.classList.contains('pin--1')) {
+		map.insertBefore(generateAd(similarHotels[1]), mapFilter);
+	} 
+	if (target.classList.contains('pin--2')) {
+		map.insertBefore(generateAd(similarHotels[2]), mapFilter);
+	} 
+	if (target.classList.contains('pin--3')) {
+		map.insertBefore(generateAd(similarHotels[3]), mapFilter);
+	} 
+	if (target.classList.contains('pin--4')) {
+		map.insertBefore(generateAd(similarHotels[4]), mapFilter);
+	} 
+	if (target.classList.contains('pin--5')) {
+		map.insertBefore(generateAd(similarHotels[5]), mapFilter);
+	} 
+	if (target.classList.contains('pin--6')) {
+		map.insertBefore(generateAd(similarHotels[6]), mapFilter);
+	} 
+	if (target.classList.contains('pin--7')) {
+		map.insertBefore(generateAd(similarHotels[7]), mapFilter);
+	} 
+
+})
+
+
+
+/* Заполнение поля адреса
+КООРДИНАТА ВЫДАЕТСЯ ОТ ЛЕВОГО ВЕРХНЕГО УГЛА МЕТКИ. ЕЕ НАДО СМЕСТИТЬ НА КОНЧИК МЕТКИ И ВЫДАТЬ ПРИ КЛИКЕ В ОКНО АДРЕСА
+(то есть вначале у меня ее центровые значение, а после маусдаун надо добавить к координатам размер хвоста. ) */
+
+//вычислить размеры метки из разметки и записать в константу.
+
+var PIN_WIDTH = 40;
+var PIN_HEIGHT = 40;
+var PIN_END = 18;
+
+//функция определяющая местоположение
+var getCoords = function(elem) {
+	let box = elem.getBoundingClientRect();
+	return { top: box.top + pageYOffset, left: box.left + pageXOffset }; }
+
+	console.log(getCoords(mapPinMain));
+
+var MAIN_PIN_LOCATION = {
+	y: mapPinMain.getBoundingClientRect().top + pageYOffset + (PIN_HEIGHT/2),
+	x: mapPinMain.getBoundingClientRect().left + pageXOffset + (PIN_WIDTH/2) 
+} 
+
+var MAIN_PIN_LOCATION__ACTIVE = {
+	y: mapPinMain.getBoundingClientRect().top + pageYOffset + PIN_HEIGHT + PIN_END,
+	x: mapPinMain.getBoundingClientRect().left + pageXOffset + (PIN_WIDTH/2) 
+} 
+
+//задаю стандартное значение
+
+var addressField = document.querySelector('#address');
+addressField.value = MAIN_PIN_LOCATION.x + ", " + MAIN_PIN_LOCATION.y;
+console.log(addressField);
+
+
+
+/* СДЕЛАНО Перемещение метки приводит к заполнению поля адреса. Поэтому в обработчике события mouseup на элементе метки, кроме вызова метода, переводящего страницу в активное состояние, должен находиться вызов метода, который устанавливает значения поля ввода адреса. 
+
+-найти поле адреса
+var addressField = document.querySelector();
+
+.addEventListener(‘mouseup’. Function (event) {
+
+addressField.value = (event.clientX + pageXOffset + PIN_WIDTH) +”, ” + (event.clientY + pageYOffset+PIN_HEIGHT);
+
+})
+
+СДЕЛАНО поле адреса должно быть заполнено всегда, даже сразу после открытия страницы. Мы можем взять за исходное значение поля адреса середину метки. А при «перетаскивании» значение поля изменится на то, на которое будет указывать острый конец метки.
+ */
