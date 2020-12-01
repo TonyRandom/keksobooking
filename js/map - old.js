@@ -1,6 +1,5 @@
-
-/*Создайте массив, состоящий из 8 сгенерированных JS объектов, которые
-будут описывать похожие объявления неподалёку */
+/* 
+/*СОЗДАНИЕ ДАННЫХ mock.js*/
 
 // объявляю массив
 var similarHotels = [];
@@ -130,6 +129,8 @@ console.log(similarHotels);
 
 
 
+// СОЗДАНИЕ ПИНОВ И ПОДОБНЫХ ОБЪЯВЛЕНИЙ ИЗ СОЗДАННОГО МОКА generate-templates.js
+
 // 2 ЗАДАНИЕ
 var map = document.querySelector('.map');
 /* map.classList.remove('map--faded'); */
@@ -172,7 +173,7 @@ var generatePinFromTemplate = function (hotel) {
 
 // ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
 
-	var insertMapPins = function () {
+/* 	var insertMapPins = function () {
 		var fragment = document.createDocumentFragment(); 
     
     for (var i = 0; i < similarHotels.length; i++) { 
@@ -207,7 +208,7 @@ var showMapPins = function () {
 		mapPins[i].classList.remove('hidden'); 
 	}
 }
-
+ */
 
 
 
@@ -230,7 +231,7 @@ var showMapPins = function () {
 
 
 // map - КУДА ВСТАВЛЯТЬ
-
+/* 
 var mapFilter= document.querySelector('.map__filters-container');
 
 //ШАБЛОН, КОТОРЫЙ БУДЕТ КОПИРОВАТЬ -- ЭТО ОБЪЯВЛЕНИЕ
@@ -238,7 +239,7 @@ var mapFilter= document.querySelector('.map__filters-container');
  var hotelTemplate = document.querySelector('template')
 	.content
 	.querySelector('.map__card'); 
-
+ */
 
 
 
@@ -246,7 +247,7 @@ var mapFilter= document.querySelector('.map__filters-container');
 
 //создать функцию генерации объявления
 
-var generateAd = function (hotel) {
+/* var generateAd = function (hotel) {
 
 	var hotelElement = hotelTemplate.cloneNode(true);
 
@@ -287,20 +288,20 @@ capacity.textContent = hotel.offer.rooms + ' комната(ы) для ' + hotel
 
 var time = hotelElement.querySelector('p:nth-of-type(4)');
 time.classList.add('popup__text--time');
-time.textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout ;
+time.textContent = 'Заезд после ' + hotel.offer.checkin + ', выезд до ' + hotel.offer.checkout ; */
 
 
 
 /* в шаблоне уже есть список с классами. сделать проверку, если в массиве нет значения Н, то удалить класс Н
 */
 
-var popupFeatures = hotelElement.querySelector('.popup__features'); // нашел УЛ
+/* var popupFeatures = hotelElement.querySelector('.popup__features'); // нашел УЛ
 
 
 var featureItems = hotel.offer.features.split(' '); //выводится массив со случайными значениями 
-
+ */
 //сматчить каждый элемент из списка ул
-
+/* 
 var wifiFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(1)');
 var dishwasherFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(2)');
 var parkingFeature = hotelElement.querySelector('.popup__features').querySelector('li:nth-child(3)');
@@ -366,7 +367,7 @@ return hotelElement;
 };
 
 console.log(similarHotels[2]);
-console.log(generateAd(similarHotels[2]));
+console.log(generateAd(similarHotels[2])); */
 
 
 
@@ -402,7 +403,7 @@ console.log(map);
 
 //почему то в моем шаблоне notice__form вместо ад форм
 
-var noticeForm = document.querySelector('.notice__form');
+/* var noticeForm = document.querySelector('.notice__form');
 var formElements = noticeForm.querySelectorAll('.form__element');
 
 var activateMap = function () {
@@ -416,19 +417,19 @@ var activateMap = function () {
 }
 
 var mapPinMain= document.querySelector('.map__pin--main');
-mapPinMain.addEventListener('mouseup', function () {
+mapPinMain.addEventListener('click', function () {
 activateMap();
 showMapPins(); 
 addressField.value = MAIN_PIN_LOCATION__ACTIVE.x + ", " + MAIN_PIN_LOCATION__ACTIVE.y;
 }
-);
+); */
 
 // по клику на метки показывать страницу описания ДЕЛЕГИРОВАНИЕ
 
 // отлавливать клики по контейнеру 
 
 
-console.log(hotelsContainer);
+/* console.log(hotelsContainer);
 
 hotelsContainer.addEventListener('click', function (evt) {
 	var target = evt.target.closest('button'); //так клик показывает кнопку, даже если клик по изображению внутри кнопки
@@ -460,7 +461,7 @@ hotelsContainer.addEventListener('click', function (evt) {
 	} 
 
 })
-
+ */
 
 
 /* Заполнение поля адреса
@@ -511,13 +512,13 @@ addressField.value = (event.clientX + pageXOffset + PIN_WIDTH) +”, ” + (even
 
 
 
- //ФОРМА
+ //ФОРМА form.js
 
 
  //расставить реквайред
  //проверить типы
  // ограничения в разметке
-
+/* 
  var priceField = document.querySelector('#price');
 var houseTypeField = document.querySelector('#type');
 
@@ -536,11 +537,11 @@ houseTypeField.addEventListener('change', function () {
 		priceField.min = 10000;
 	}
 
-})
+}) */
 
 //синхронизация времени заезда
 
-var timeInField = document.querySelector('#timein');
+/* var timeInField = document.querySelector('#timein');
 var timeOutField = document.querySelector('#timeout');
 
 
@@ -566,23 +567,23 @@ timeOutField.addEventListener('change', function () {
 	if (timeOutField.selectedIndex === 2) {
 		timeInField.selectedIndex = 2;
 	}
-})
+}) */
 
 //. Поле «Количество комнат» синхронизировано с полем «Количество мест»
 
-var roomNumberField = document.querySelector('#room_number');
-var capacityField = document.querySelector('#capacity');
+/* var roomNumberField = document.querySelector('#room_number');
+var capacityField = document.querySelector('#capacity'); */
 
 /* capacityField.options[0].removeAttribute('selected'); */
 
 //задать вместимость для одной комнаты по умолчанию. так как количеством меняется только по  клику на первый 
-	capacityField.options[0].disabled= true;
+/* 	capacityField.options[0].disabled= true;
 	capacityField.options[1].disabled= true;
 	capacityField.options[2].disabled= false;
-	capacityField.options[3].disabled= true;
+	capacityField.options[3].disabled= true; */
 
 
-roomNumberField.addEventListener('click', function () {
+/* roomNumberField.addEventListener('click', function () {
 
 	if (roomNumberField.selectedIndex == 0) {
 		
@@ -611,17 +612,18 @@ roomNumberField.addEventListener('click', function () {
 		capacityField.options[3].disabled= false;
 	}
 });
-
+ */
 
 
 // MODULE 5
 
-/*  <button class="map__pin map__pin--main">
-        <img src="img/main-pin-image.png" width="40" height="44" draggable="false"> */
+//активацию окна изменил на клик
 
+//map - ограничивает область перемещения
 
-/* mapPinMain.addEventListener('mousedown', function(evt) {
-	console.log(evt.target);
+/* 
+mapPinMain.addEventListener('mousedown', function(evt) {
+	
 	evt.preventDefault();
 
 	var startCoords = {
@@ -629,31 +631,39 @@ roomNumberField.addEventListener('click', function () {
 		y: evt.clientY
 	};
 	
+	console.log(startCoords.x);
+
 	var onMouseMove = function (moveEvt) {
 		moveEvt.preventDefault();
 		var shift = {
 			x: startCoords.x - moveEvt.clientX,
 			y: startCoords.y - moveEvt.clientY
 		}
+		
 
 		startCoords = {
 			x: moveEvt.clientX,
 			y: moveEvt.clientY
 		} 
 
-		mapPinMain.style.top = (mapPinMain.offsetLeft - shift.x) + 'px';
+		//добавить в поле запись адреса!!!!!
+		addressField.value = startCoords.x + ", " + startCoords.y;
+
+		mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 		mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
 	}
 
 	var onMouseUp = function (upEvt) {
 		upEvt.preventDefault();
-		document.removeEventListener('mousemove', onMouseMove);
-		document.removeEventListener('mouseup', onMouseUp);
+		map.removeEventListener('mousemove', onMouseMove);
+		map.removeEventListener('mouseup', onMouseUp);
 	   };
 
 	
 
-	document.addEventListener('mousemove', onMouseMove);
-	document.removeEventListener('mouseup', onMouseUp);
+	   map.addEventListener('mousemove', onMouseMove);
+	   map.addEventListener('mouseup', onMouseUp);
 
-}) */
+}) 
+
+ */ */
