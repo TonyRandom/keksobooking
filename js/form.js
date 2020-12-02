@@ -146,6 +146,13 @@ var inputs = form.querySelectorAll('input'); // все инпуты формы
 var titleInput = form.querySelector('#title');
 console.log(inputs);
 
+var resetForm = function () {
+	for (var i = 0; i < inputs.length; i++) {
+		inputs[i].value = '';
+	}
+
+}
+
 titleInput.addEventListener('invalid', function () {
 	if (titleInput.validity.tooShort) {
 		titleInput.setCustomValidity('Заголовок должен состоять минимум из ' + titleInput.getAttribute('minlength') + ' символов. Сейчас длина заголовка ' + titleInput.value.length + ' символа(-ов)');
@@ -203,6 +210,7 @@ formSubmitButton.addEventListener('click', function (evt) {
 	if(form.checkValidity() === true) {
 
 	window.save(new FormData(form), successCase, errorCase);
+	resetForm();
 	evt.preventDefault();
 	}
 
