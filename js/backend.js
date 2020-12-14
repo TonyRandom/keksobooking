@@ -2,12 +2,14 @@
 
 window.load = function (onLoad, onError) {
     var URL = 'https://javascript.pages.academy/keksobooking/data';
+    /* var URL = 'https://raw.githubusercontent.com/TonyRandom/keksobooking-DB/main/db.json'; */
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
         if (xhr.status = 200) {
+          window.loadedData = xhr.response;
         onLoad(xhr.response);
         } else {
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);

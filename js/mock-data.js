@@ -1,3 +1,19 @@
+
+
+
+
+
+
+// СТАРАЯ ВЕРСИЯ МАП ДАТА БЕЗ МОКА, ЧТО НАВЕРХУ
+
+'use strict'; 
+
+(function(){
+/*СОЗДАНИЕ ДАННЫХ mock.js*/
+
+// объявляю массив
+var similarHotels = [];
+
 //как забить массив заданными числовыми значениями
 
 var arrayPush = function (min, max) {
@@ -7,6 +23,82 @@ var arrayPush = function (min, max) {
   } 
     return newArray;
 }
+
+var numbersArray = arrayPush(1, 8);
+
+
+
+  
+//функция выбора случайного элемента из массива
+
+var renderRandomArrayItem = function(array) {
+	var i = renderRandomNumber(0, array.length-1);
+	var randomItem = array[i];
+	return randomItem;
+}
+
+// функция случайного перемещивания элементов массива
+
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+  
+	while (0 !== currentIndex) {
+  
+	  randomIndex = Math.floor(Math.random() * currentIndex);
+	  currentIndex -= 1;
+  
+	  temporaryValue = array[currentIndex];
+	  array[currentIndex] = array[randomIndex];
+	  array[randomIndex] = temporaryValue;
+	}
+  
+	return array;
+  }
+
+
+//функция выдающая несколько случайных элементов из массива // случайным должно быть число окончания цикла. и до этого перемеживать надо
+
+var pushRandomArrayItems = function (array) {
+	shuffle(array);// перемешаем массив
+	var randomArrayItems = '';
+	for (var i = 0; i<= renderRandomNumber(0, array.length); i++) {
+	randomArrayItems += array[i] +' ';
+	}
+	return randomArrayItems;
+}
+
+
+
+// все данные, которые будем использовать.
+
+//создадим функцию создания объектов с такими данными.
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+//как забить массив заданными числовыми значениями
+
+var arrayPush = function (min, max) {
+	var newArray = [];
+  for (var i = min; i<= max; i++) {
+    newArray.push(i);
+  } 
+    return newArray;
+}
+
+
+var numbersArray = arrayPush(1, 8);
+
+//функция возвращающая случайное число из заданного диапазона
+
+var renderRandomNumber = function (min, max) {
+	var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+	return randomNumber;
+	}
 
 //функция выбора случайного элемента из массива
 
@@ -111,92 +203,11 @@ console.log(similarHotels);
 
 
 
-
-
-
-// СТАРАЯ ВЕРСИЯ МАП ДАТА БЕЗ МОКА, ЧТО НАВЕРХУ
-
-'use strict'; 
-
-(function(){
-/*СОЗДАНИЕ ДАННЫХ mock.js*/
-
-// объявляю массив
-var similarHotels = [];
-
-//как забить массив заданными числовыми значениями
-
-var arrayPush = function (min, max) {
-	var newArray = [];
-  for (var i = min; i<= max; i++) {
-    newArray.push(i);
-  } 
-    return newArray;
-}
-
-var numbersArray = arrayPush(1, 8);
-
-
-//функция возвращающая случайное число из заданного диапазона
-
-var renderRandomNumber = function (min, max) {
-	var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-	return randomNumber;
-	}
-  
-//функция выбора случайного элемента из массива
-
-var renderRandomArrayItem = function(array) {
-	var i = renderRandomNumber(0, array.length-1);
-	var randomItem = array[i];
-	return randomItem;
-}
-
-// функция случайного перемещивания элементов массива
-
-function shuffle(array) {
-	var currentIndex = array.length, temporaryValue, randomIndex;
-  
-	while (0 !== currentIndex) {
-  
-	  randomIndex = Math.floor(Math.random() * currentIndex);
-	  currentIndex -= 1;
-  
-	  temporaryValue = array[currentIndex];
-	  array[currentIndex] = array[randomIndex];
-	  array[randomIndex] = temporaryValue;
-	}
-  
-	return array;
-  }
-
-
-//функция выдающая несколько случайных элементов из массива // случайным должно быть число окончания цикла. и до этого перемеживать надо
-
-var pushRandomArrayItems = function (array) {
-	shuffle(array);// перемешаем массив
-	var randomArrayItems = '';
-	for (var i = 0; i<= renderRandomNumber(0, array.length); i++) {
-	randomArrayItems += array[i] +' ';
-	}
-	return randomArrayItems;
-}
-
-
-
-// все данные, которые будем использовать.
-
-//создадим функцию создания объектов с такими данными.
-
-
-
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
+var allHotels = '';
+similarHotels.forEach(function(hotel) {
+	allHotels += JSON.stringify(hotel);
+});
+console.log(allHotels);
 
 //similarHotels - массив, который должен получить с сервера
 

@@ -95,8 +95,12 @@ var generatePinFromTemplate = function (hotel) {
 
 // ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
 
-	var insertMapPins = function (hotels) {
+	window.loadedHotelData = []; // записываю в переменную загруженные данные
+
+	window.insertMapPins = function (hotels) {
 		var fragment = document.createDocumentFragment(); 
+		loadedHotelData = hotels;
+		console.log(window.loadedHotelData);
     
     for (var i = 0; i < hotels.length; i++) { 
 		var newPin = generatePinFromTemplate(hotels[i]);
@@ -110,8 +114,6 @@ var generatePinFromTemplate = function (hotel) {
 
 	};
 
-
-	
 
 	
 
