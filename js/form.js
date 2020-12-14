@@ -29,6 +29,10 @@ houseTypeField.addEventListener('change', function () {
 
 })
 
+
+
+
+
 //синхронизация времени заезда
 
 var timeInField = document.querySelector('#timein');
@@ -156,45 +160,19 @@ var resetForm = function () {
 titleInput.addEventListener('invalid', function () {
 	if (titleInput.validity.tooShort) {
 		titleInput.setCustomValidity('Заголовок должен состоять минимум из ' + titleInput.getAttribute('minlength') + ' символов. Сейчас длина заголовка ' + titleInput.value.length + ' символа(-ов)');
-	}
-});
-
-/* for (var i = 0; i < inputs.length; i++) {
-
-	var input = inputs[i];
-
-	console.log(input.validity);
-	
-	input.addEventListener(‘invalid’, function (evt) {
-		if (input.validity.tooShort) {
-		input.setCustomValidity(‘Имя должно состоять минимум из двух символов’);
-		} else if (input.validity.tooLong) {
-		input.setCustomValidity(‘Имя должно состоять максимум из 25-ти символов’);
-		} else if (inputName.validity.valueMissing) {
-		input.setCustomValidity(‘Обязательное поле’)
-		} ;
+	} else if (titleInput.validity.tooLong) {
+		input.setCustomValidity('Имя должно состоять максимум из 100 символов');
+	}  else if (titleInput.validity.valueMissing) {
+		input.setCustomValidity('Обязательное поле')
+		} 
 		//самое главное при работе с обработчиками валидации – не забыть сбросить значение поля, если значение стало корректно
 		else {
-		inputName.setCustomValidity(‘’)
-		} ;
-		
+			titleInput.setCustomValidity('')
+		} 
 
-    // Проверим валидность поля, используя встроенную в JavaScript функцию checkValidity()
-    if (input.checkValidity() == false) {
+	});
 
-      var inputCustomValidation = new CustomValidation(); // Создадим объект CustomValidation
-      inputCustomValidation.checkValidity(input); // Выявим ошибки
-      var customValidityMessage = inputCustomValidation.getInvalidities(); // Получим все сообщения об ошибках
-      input.setCustomValidity(customValidityMessage); // Установим специальное сообщение об ошибке
 
-      // Добавим ошибки в документ
-      var customValidityMessageForHTML = inputCustomValidation.getInvaliditiesForHTML();
-      input.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>')
-      stopSubmit = true;
-
-    } // закончился if
-  }
- */
 
 //ОТПРАВКА ФОРМЫ
 //ФОРМА ОТПРАВЛЯЕТСЯ, только если все поля верны
