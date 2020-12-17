@@ -1,3 +1,4 @@
+'use strict';
 (function () {
 
 window.load = function (onLoad, onError) {
@@ -8,8 +9,7 @@ window.load = function (onLoad, onError) {
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-        if (xhr.status = 200) {
-          window.loadedData = xhr.response;
+        if (xhr.status === 200) {
         onLoad(xhr.response);
         } else {
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);

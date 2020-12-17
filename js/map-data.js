@@ -104,13 +104,15 @@ var generatePinFromTemplate = function (hotel) {
 	window.loadedHotelData = []; // записываю в переменную загруженные данные
 
 	window.insertMapPins = function (hotels) {
-		var fragment = document.createDocumentFragment(); 
 		window.loadedHotelData = hotels;
-		console.log(window.loadedHotelData);
+		var fragment = document.createDocumentFragment(); 
+		
+		/* console.log(window.loadedHotelData); */
     
-    for (var i = 0; i < hotels.length; i++) { 
-		var newPin = generatePinFromTemplate(hotels[i]);
+    for (var i = 0; i < window.loadedHotelData.length; i++) { 
+		var newPin = generatePinFromTemplate(window.loadedHotelData[i]);
 		newPin.classList.add('pin--'+ i);
+		console.log(newPin);
        
 
         fragment.appendChild(newPin);
