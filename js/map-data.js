@@ -57,7 +57,7 @@ var map = document.querySelector('.map');
 /* map.classList.remove('map--faded'); */
 
 //map__pins - куда вставлять все ПИНы
-var hotelsContainer = document.querySelector('.map__pins');
+window.hotelsContainer = document.querySelector('.map__pins');
 
 
 
@@ -75,8 +75,14 @@ var pinTemplate = document.querySelector('template')
 var generatePinFromTemplate = function (hotel) {
 
 	var hotelPinElement = pinTemplate.cloneNode(true);
-	hotelPinElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
+
+	//так для МОКа координаты задавались
+	/* hotelPinElement.style.top = renderRandomNumber(100, 500) + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
 	hotelPinElement.style.left = renderRandomNumber(300, 900) + 'px';
+ */
+	
+	hotelPinElement.style.top = hotel.location.y + 'px'; // ТАК ЗАДАЮТСЯ КООРДИНАТЫ!!!!!!!!!! задавать надо ПИНУ
+	hotelPinElement.style.left = hotel.location.x + 'px';
 
 	var pinAvatar = hotelPinElement.querySelector('img');
 	
@@ -99,7 +105,7 @@ var generatePinFromTemplate = function (hotel) {
 
 	window.insertMapPins = function (hotels) {
 		var fragment = document.createDocumentFragment(); 
-		loadedHotelData = hotels;
+		window.loadedHotelData = hotels;
 		console.log(window.loadedHotelData);
     
     for (var i = 0; i < hotels.length; i++) { 
@@ -227,7 +233,8 @@ time.textContent = 'Заезд после ' + hotel.offer.checkin + ', выез�
 var popupFeatures = hotelElement.querySelector('.popup__features'); // нашел УЛ
 
 
-var featureItems = hotel.offer.features.split(' '); //выводится массив со случайными значениями 
+var featureItems = hotel.offer.features;
+
 
 //сматчить каждый элемент из списка ул
 
@@ -355,34 +362,37 @@ hotelsContainer.addEventListener('click', function (evt) {
 	if (!target) { //чтобы только по кнопке срабатывал
 		return;}		
 	if (target.classList.contains('pin--0')) {
-		map.insertBefore(generateAd(similarHotels[0]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[0]), mapFilter);
 	} 
 	if (target.classList.contains('pin--1')) {
-		map.insertBefore(generateAd(similarHotels[1]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[1]), mapFilter);
 	} 
 	if (target.classList.contains('pin--2')) {
-		map.insertBefore(generateAd(similarHotels[2]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[2]), mapFilter);
 	} 
 	if (target.classList.contains('pin--3')) {
-		map.insertBefore(generateAd(similarHotels[3]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[3]), mapFilter);
 	} 
 	if (target.classList.contains('pin--4')) {
-		map.insertBefore(generateAd(similarHotels[4]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[4]), mapFilter);
 	} 
 	if (target.classList.contains('pin--5')) {
-		map.insertBefore(generateAd(similarHotels[5]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[5]), mapFilter);
 	} 
 	if (target.classList.contains('pin--6')) {
-		map.insertBefore(generateAd(similarHotels[6]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[6]), mapFilter);
 	} 
 	if (target.classList.contains('pin--7')) {
-		map.insertBefore(generateAd(similarHotels[7]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[7]), mapFilter);
 	} 
 	if (target.classList.contains('pin--8')) {
-		map.insertBefore(generateAd(similarHotels[8]), mapFilter);
+		map.insertBefore(generateAd(window.loadedHotelData[8]), mapFilter);
 	}
-	if (target.classList.contains('pin--7')) {
-		map.insertBefore(generateAd(similarHotels[7]), mapFilter);
+	if (target.classList.contains('pin--9')) {
+		map.insertBefore(generateAd(window.loadedHotelData[9]), mapFilter);
+	}
+	if (target.classList.contains('pin--10')) {
+		map.insertBefore(generateAd(window.loadedHotelData[10]), mapFilter);
 	}
 })
 

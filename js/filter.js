@@ -4,47 +4,114 @@
     //window.loadedHotelData; //загруженные данные
     // записать в переменные данные формы
 
+    var HOUSE_PRICE = {
+        MIN: '10000',
+        MAX: '50000'
+    };
+
     var filterForm = document.querySelector('.map__filters');
-    console.log(filterForm);
-    var houseType = filterForm.querySelector('#housing-type');
-    console.log(houseType);
+
+    var houseType = filterForm.querySelector('#housing-type'); 
     var housePrice = filterForm.querySelector('#housing-price');
+    var houseRooms = filterForm.querySelector('#housing-rooms');
+    var houseGuests = filterForm.querySelector('#housing-guests');
+    var houseFeatures = filterForm.querySelector('#housing-features');
+    
+    filterForm.addEventListener('change', function () {
+       /*  console.log('hello'); */
+ 
+       updateHotels();
+    })
+
+    
  
 
+
+    //функции, которые будут вставлять коллбэком в фильтр
+
+    var filterByType = function (it) {
+        if (houseType.value === 'any') {
+            return true;
+        }
+             
+      return it.offer.type === houseType.value;
+      
+  }
+    
+  
+ 
+    //функция запуска фильтрации загруженных данных
+  
+ 
+
+    var removePin = function () {
+        var mapPinItems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+        mapPinItems.forEach(function (item) {
+          item.innerHTML = '';
+        });
+      };
+
+     
+
+
     var updateHotels = function () {
+        
+       
+       
+     
+
+      
+        
+
+        
+      var filteredHotels = window.loadedHotelData.filter(filterByType);
+
+    removePin();
+    
+    console.log(houseType.value);
+
+    window.insertMapPins(filteredHotels); 
+/* hotelArrayCopy = JSON.parse(JSON.stringify(window.loadedHotelData)); */
+    console.log(window.loadedHotelData);
+ 
+        return;
+
+};
 
 
-        window.insertMapPins(window.loadedData);
-    };
+
     
 
-    var houseTypeValue;
-   
+
+/*   var houseTypeValue;
 
     houseType.addEventListener('change', function () {
         houseTypeValue = houseType.value; // отлавливаем изменения и записываем в переменную.
-        console.log(houseTypeValue);
+                console.log(houseTypeValue);
 
-        housePriceValue=housePrice.value;
+                updateHotels();
+    })
 
-        console.log(houseTypeValue);
-})
+
 
     var housePriceValue;
+
     housePrice.addEventListener('change', function () {
         housePriceValue = housePrice.value; // отлавливаем изменения и записываем в переменную.
         console.log(housePriceValue);
 
-    
-})
+    })  */
 
         
-        //фильтрация массива
-        window.loadedHotelData.filter(function(hotel) {
+    //фильтрация массива
+     /*  var filterByType = function() { 
+          window.loadedHotelData.filter(function(hotel) {
             //   console.log(hotel.offer.type === houseTypeValue); // возвращает тру и фолс
                return hotel.offer.type === houseTypeValue;
         /* updateHotels(); */
-    });
+   /*  }); }*/
+
+    
 
 
 
