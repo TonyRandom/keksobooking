@@ -112,39 +112,6 @@ roomNumberField.addEventListener('click', function () {
 //ВАЛИДАЦИЯ ФОРМЫ
 
 
-
-
-/* 
- var checkValidity = function(input) {
-
-    var validity = input.validity;
-
-    if (validity.patternMismatch) {
-      this.addInvalidity('This is the wrong pattern for this field');
-    }
-
-    if (validity.rangeOverflow) {
-      var max = getAttributeValue(input, 'max');
-      this.addInvalidity('The maximum value should be ' + max);
-    }
-
-    if (validity.rangeUnderflow) {
-      var min = getAttributeValue(input, 'min');
-      this.addInvalidity('The minimum value should be ' + min);
-    }
-
-    if (validity.stepMismatch) {
-      var step = getAttributeValue(input, 'step');
-      this.addInvalidity('This number needs to be a multiple of ' + step);
-    }
-
-};
-
-
-console.log(CustomValidation()); */
-
-
-
 var form = document.querySelector('.notice__form'); //форма
 var inputs = form.querySelectorAll('input'); // все инпуты формы
 var titleInput = form.querySelector('#title');
@@ -181,17 +148,12 @@ var formSubmitButton = document.querySelector('.form__submit');
 
 
 formSubmitButton.addEventListener('click', function (evt) {
+	if (form.checkValidity() === true) {
 
-
-
-
-	if(form.checkValidity() === true) {
-
-	window.save(new FormData(form), successCase, errorCase);
-	resetForm();
-	evt.preventDefault();
+		window.save(new FormData(form), successCase, errorCase);
+		resetForm();
+		evt.preventDefault();
 	}
-
 })
 
 

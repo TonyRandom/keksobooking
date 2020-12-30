@@ -1,6 +1,7 @@
 'use strict';
 (function() {
 
+
     //window.loadedHotelData; //загруженные данные
     // записать в переменные данные формы
 
@@ -10,26 +11,13 @@
       };
 
     var filterForm = document.querySelector('.map__filters');
-   /*  var filtersSelect = filterForm.querySelectorAll('select'); */
     var houseType = filterForm.querySelector('#housing-type'); 
     var housePrice = filterForm.querySelector('#housing-price');
     var houseRooms = filterForm.querySelector('#housing-rooms');
     var houseGuests = filterForm.querySelector('#housing-guests');
     var houseFeatures = filterForm.querySelector('#housing-features');
 
-/*     var deactivateFilters = function () {
-        filterForm.reset();
-        houseFeatures.disabled = true;
-      }; */
-    /*   var setDisabled = function () {
-        filtersSelect.forEach(function (item) {
-        item.disabled = true;
-        }); */
-    /* 
-      deactivateFilters();
-    
-     */
-    
+
  
 
 
@@ -74,8 +62,7 @@
     });
   };
 
-    //функция запуска фильтрации загруженных данных
-  
+   
  
 
     var removePin = function () {
@@ -86,7 +73,7 @@
       };
 
   //mock
-var HOTEL_DATA = [ 
+ var HOTEL_DATA = [ 
   {
     "author": {
       "avatar": "img/avatars/user01.png"
@@ -410,78 +397,47 @@ var HOTEL_DATA = [
   }
 ] 
 //FA
-
+ 
 /* var HOTEL_DATA_FROM_SERVER = window.loadedHotelData; */
+/* console.log(HOTEL_DATA_FROM_SERVER); */
+
+
     var updateHotels = function () {
-        /* window.insertMapPins(window.loadedHotelData); */
-        console.log(housePrice.value); // возвращает только первое выбранное значение
         
+
+      var HOTEL_DATA_FROM_SERVER = window.loadedHotelData;
+      console.log(HOTEL_DATA_FROM_SERVER);
      
-        /* var pinsCopy = window.loadedHotelData.slice(); */
-        var pinsCopy = HOTEL_DATA.slice();
+        var pinsCopy = HOTEL_DATA_FROM_SERVER;
+       /*  var pinsCopy = HOTEL_DATA.slice(); */
 
         var unfilteredArray = window.loadedHotelData.slice();
       
         
         var filteredHotels = pinsCopy.slice();
         removePin();
-      /*  filteredHotels = pinsCopy.filter(filterByType).filter(filterByPrice).filter(filterByRooms).filter(filterByGuests).filter(filterByFeauters); */
+     
       filteredHotels = pinsCopy.filter (function (it) {
           return filterByType(it) && filterByPrice(it) && filterByRooms(it) && filterByGuests(it) && filterByFeauters(it);
       })
-      /* (filterByType).filter(filterByPrice).filter(filterByRooms).filter(filterByGuests).filter(filterByFeauters);
- */
-  
+
     
-    /* console.log(houseType.value); */
 
     window.insertMapPins(filteredHotels); 
-/* 
-    console.log(unfilteredArray); */
- 
-       
+   
+   
 
 };
 
 
 filterForm.addEventListener('change', function() {
-    console.log(housePrice.value);
     updateHotels();
 } )
 
     
 
 
-/*   var houseTypeValue;
-
-    houseType.addEventListener('change', function () {
-        houseTypeValue = houseType.value; // отлавливаем изменения и записываем в переменную.
-                console.log(houseTypeValue);
-
-                updateHotels();
-    })
 
 
 
-    var housePriceValue;
-
-    housePrice.addEventListener('change', function () {
-        housePriceValue = housePrice.value; // отлавливаем изменения и записываем в переменную.
-        console.log(housePriceValue);
-
-    })  */
-
-        
-    //фильтрация массива
-     /*  var filterByType = function() { 
-          window.loadedHotelData.filter(function(hotel) {
-            //   console.log(hotel.offer.type === houseTypeValue); // возвращает тру и фолс
-               return hotel.offer.type === houseTypeValue;
-        /* updateHotels(); */
-   /*  }); }*/
-
-    
-
-
-
-})();
+}) ();
