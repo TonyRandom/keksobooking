@@ -5,11 +5,7 @@
 //ФОРМА form.js
 
 
- //расставить реквайред
- //проверить типы
- // ограничения в разметке
-
- var priceField = document.querySelector('#price');
+var priceField = document.querySelector('#price');
 var houseTypeField = document.querySelector('#type');
 
 houseTypeField.addEventListener('change', function () {

@@ -2,14 +2,28 @@
 
 (function () {
 
-	/* var renderRandomNumber = function (min, max) {
-		var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-		return randomNumber;
+	window.loadedHotelData = [];
+	const successCase = function (hotels) {
+		window.loadedHotelData = hotels;
+
+		var fragment = document.createDocumentFragment();
+
+
+
+		for (var i = 0; i < window.loadedHotelData.length; i++) {
+			var newPin = window.generatePinFromTemplate(window.loadedHotelData[i]);
+			newPin.classList.add('pin--' + i);
+			console.log(newPin);
+
+
+			fragment.appendChild(newPin);
+		}
+
+		hotelsContainer.appendChild(fragment);
 	}
- */
 
 
-	var errorHandler = function (errorMessage) {
+	const errorHandler = function (errorMessage) {
 		var node = document.createElement('div');
 		node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
 		node.style.position = 'absolute';
@@ -27,7 +41,7 @@
 
 	// СОЗДАНИЕ ПИНОВ И ПОДОБНЫХ ОБЪЯВЛЕНИЙ
 
-	var map = document.querySelector('.map');
+	const map = document.querySelector('.map');
 
 	//map__pins - куда вставлять все ПИНы
 	window.hotelsContainer = document.querySelector('.map__pins');
@@ -36,14 +50,14 @@
 
 
 	// ЭТО ПИН
-	var pinTemplate = document.querySelector('template')
+	const pinTemplate = document.querySelector('template')
 		.content
 		.querySelector('.map__pin');
 
 
 	// это генерация одного пина. надо потом эту функцию вставлять в цикл, который принимает на вход массив
 
-	var generatePinFromTemplate = function (hotel) {
+	window.generatePinFromTemplate = function (hotel) {
 
 		var hotelPinElement = pinTemplate.cloneNode(true);
 
@@ -64,69 +78,16 @@
 
 
 
-	// ФУНКЦИЯ ДОБАВЛЕНИЯ В ВЕРСТКУ ЧЕРЕЗ ДОКУМЕНТ ФРАГМЕНТ
 
-	 window.loadedHotelData = []; // записываю в переменную загруженные данные
+	// map - КУДА ВСТАВЛЯТЬ ОБЪЯВЛЕНИЯ
 
-	window.insertMapPins = function (hotels) {
-		window.loadedHotelData = hotels;
-		var fragment = document.createDocumentFragment();
-
-		/* console.log(window.loadedHotelData); */
-
-		for (var i = 0; i < window.loadedHotelData.length; i++) {
-			var newPin = generatePinFromTemplate(window.loadedHotelData[i]);
-			newPin.classList.add('pin--' + i);
-			console.log(newPin);
-
-
-			fragment.appendChild(newPin);
-		}
-
-		hotelsContainer.appendChild(fragment);
-
-	};
-
-
-
-
-
-
-
-	// функции скрытия и показа отрисованных меток
-	/* 
-	var hideMapPins = function () {
-		var mapPins = document.querySelectorAll('.map__pin');
-		for (var i = 1; i <= similarHotels.length; i++ ) {
-			mapPins[i].classList.add('hidden'); 
-		}
-	}
-
-	hideMapPins();
-
-	var showMapPins = function () {
-		var mapPins = document.querySelectorAll('.map__pin');
-		for (var i = 1; i <= similarHotels.length; i++ ) {
-			mapPins[i].classList.remove('hidden'); 
-		}
-	}
-	 */
-
-
-
-
-
-	// map - КУДА ВСТАВЛЯТЬ
-
-	var mapFilter = document.querySelector('.map__filters-container');
+	const mapFilter = document.querySelector('.map__filters-container');
 
 	//ШАБЛОН, КОТОРЫЙ БУДЕТ КОПИРОВАТЬ -- ЭТО ОБЪЯВЛЕНИЕ
 
-	var hotelTemplate = document.querySelector('template')
+	const hotelTemplate = document.querySelector('template')
 		.content
 		.querySelector('.map__card');
-
-
 
 
 	// по порядку задаю значения, но не добавляю никуда
@@ -259,7 +220,7 @@
 
 
 
-	// 1. Активация страницы
+	// Активация страницы
 
 
 	var noticeForm = document.querySelector('.notice__form');
@@ -280,17 +241,14 @@
 	mapPinMain.addEventListener('click', function () {
 		if (map.classList.contains('map--faded')) {
 			activateMap();
-			window.load(insertMapPins, errorHandler);
+			window.load(successCase, errorHandler);
 			addressField.value = MAIN_PIN_LOCATION__ACTIVE.x + ", " + MAIN_PIN_LOCATION__ACTIVE.y;
 		}
 	});
 
 	// по клику на метки показывать страницу описания ДЕЛЕГИРОВАНИЕ
 
-	// отлавливать клики по контейнеру 
-
-
-
+	
 	hotelsContainer.addEventListener('click', function (evt) {
 		var target = evt.target.closest('button'); //так клик показывает кнопку, даже если клик по изображению внутри кнопки
 		if (!target) { //чтобы только по кнопке срабатывал
@@ -333,11 +291,8 @@
 
 
 
-	/* Заполнение поля адреса
-	КООРДИНАТА ВЫДАЕТСЯ ОТ ЛЕВОГО ВЕРХНЕГО УГЛА МЕТКИ. ЕЕ НАДО СМЕСТИТЬ НА КОНЧИК МЕТКИ И ВЫДАТЬ ПРИ КЛИКЕ В ОКНО АДРЕСА
-	(то есть вначале у меня ее центровые значение, а после маусдаун надо добавить к координатам размер хвоста. ) */
-
-	//вычислить размеры метки из разметки и записать в константу.
+	// Заполнение поля адреса
+	
 
 	var PIN_WIDTH = 40;
 	var PIN_HEIGHT = 40;
@@ -369,27 +324,7 @@
 	var addressField = document.querySelector('#address');
 	addressField.value = MAIN_PIN_LOCATION.x + ", " + MAIN_PIN_LOCATION.y;
 
-	/* СДЕЛАНО Перемещение метки приводит к заполнению поля адреса. Поэтому в обработчике события mouseup на элементе метки, кроме вызова метода, переводящего страницу в активное состояние, должен находиться вызов метода, который устанавливает значения поля ввода адреса. 
-
-	-найти поле адреса
-	var addressField = document.querySelector();
-
-	.addEventListener(‘mouseup’. Function (event) {
-
-	addressField.value = (event.clientX + pageXOffset + PIN_WIDTH) +”, ” + (event.clientY + pageYOffset+PIN_HEIGHT);
-
-	})
-
-	СДЕЛАНО поле адреса должно быть заполнено всегда, даже сразу после открытия страницы. Мы можем взять за исходное значение поля адреса середину метки. А при «перетаскивании» значение поля изменится на то, на которое будет указывать острый конец метки.
-	 */
-
-
-	// MODULE 5
-
-	//активацию окна изменил на клик
-
-	//map - ограничивает область перемещения
-
+	//drag n drop
 
 	mapPinMain.addEventListener('mousedown', function (evt) {
 
