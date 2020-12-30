@@ -27,8 +27,6 @@
   var houseGuests = filterForm.querySelector('#housing-guests');
   var houseFeatures = filterForm.querySelector('#housing-features');
 
-
-
   //функции, которые будут вставлять коллбэком в фильтр
 
   var filterByType = function (it) {
@@ -98,7 +96,4 @@
   filterForm.addEventListener('change', function () {
     updateHotels();
   })
-
-
-
 })();
