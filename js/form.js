@@ -189,18 +189,74 @@
 		};
 	})
 
-	//жилье 
-	const flatPhotoInput = document.querySelector('#images');
+	//жилье ДОДЕЛАТЬ
+/* 	const flatPhotoInput = document.querySelector('#images');
 	//куда вставлять изображения с фото
 	const flatPreview = document.querySelector('.upload');
 
 	flatPhotoInput.addEventListener('change', function () {
-		let files = avatarInput.files;
-		console.log(files);
+				let files = flatPhotoInput.files;
+				console.log(files);
+
+				for (let i = 0; i < files.length; i++) {
+					
+					let fileName = files[i].name.toLowerCase();
+					let matches = FILE_TYPES.filter(function (it) {
+						return fileName.endsWith(it);
+					})
+
+					if (matches) {
+						console.log('hello');
+						/* let image = document.createElement('img');
+						image.classList.add('flat-img');
+						image.src = "img/avatars/user01.png";
+						flatPreview.appendChild(image);
+						console.log(image);
+
+						const reader = new FileReader();
+
+						reader.addEventListener('load', function () {
+								image.src = reader.result;
+								console.log(image.src);
+							} */
+						/* }
+
+					}
+				}
+			}); */
 		
-		for (var i = 0; i<files.length; i++) {
-			console.log('hello');
-		}
+		/* 
+
+			let fileName = files[i].name.toLowerCase(); */
+			
+			/* let matches = FILE_TYPES.filter(function (it) {
+				return fileName.endsWith(it);
+			}) */
+
+			/* if (matches) {
+				let image = document.createElement('img');
+				image.classList.add('flat-img');
+				/* image.src = "img/avatars/user01.png"; 
+				flatPreview.appendChild(image);
+				console.log(image); 
+
+				const reader = new FileReader();
+		 
+			reader.addEventListener('load', function () {
+				image.src = reader.result;
+				console.log(image.src);
+			}
+ 
+			
+			
+		} */
+	/* } */
+	
+
+
+
+
+
 		/* let fileName = file.name.toLowerCase();
 		let matches = FILE_TYPES.filter(function (it) {
 			return fileName.endsWith(it);
@@ -213,7 +269,7 @@
 			})
 			reader.readAsDataURL(file);
 		}; */
-	})
+	/* }) */
 
 
 

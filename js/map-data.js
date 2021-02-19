@@ -193,19 +193,36 @@
 		popupDescription.textContent = hotel.offer.description;
 
 
+		//скрыл изображения
+
 		var popupPhotos = hotelElement.querySelector('.popup__pictures');
 		popupPhotos.classList.add('.popup__photos');
 
 		popupPhotos.querySelector('li:nth-child(1)').querySelector('img').src = hotel.offer.photos[0];
-
 		popupPhotos.querySelector('li:nth-child(1)').querySelector('img').classList.add('popupPhoto');
 		popupPhotos.querySelector('li:nth-child(2)').querySelector('img').src = hotel.offer.photos[1];
 		popupPhotos.querySelector('li:nth-child(2)').querySelector('img').classList.add('popupPhoto');
 		popupPhotos.querySelector('li:nth-child(3)').querySelector('img').src = hotel.offer.photos[2];
 		popupPhotos.querySelector('li:nth-child(3)').querySelector('img').classList.add('popupPhoto');
 
+		//изменил размер изображений
+		var loadedPhotos = hotelElement.querySelectorAll('.popupPhoto');
+			loadedPhotos.forEach(elem => elem.style.width = '80px'); 
+ 
 		var popupAvatar = hotelElement.querySelector('img');
 		popupAvatar.src = hotel.author.avatar;
+
+
+
+
+		console.log(hotelElement);
+		var closeAdBtn = hotelElement.querySelector('.popup__close');
+		var closeAd = function () {
+			hotelElement.remove();
+		};
+
+		closeAdBtn.addEventListener('click', closeAd);
+
 
 		return hotelElement;
 
@@ -213,6 +230,16 @@
 
 
 
+
+
+	//закрытие объявления при клике на новое
+	var closeAd = function () {
+		var ad = document.querySelector('.map__card');
+		if (ad) {
+			console.log(ad);
+			ad.remove();
+		}
+	};
 
 
 
@@ -246,45 +273,59 @@
 		}
 	});
 
+
+
+
 	// по клику на метки показывать страницу описания ДЕЛЕГИРОВАНИЕ
 
-	
+
 	hotelsContainer.addEventListener('click', function (evt) {
 		var target = evt.target.closest('button'); //так клик показывает кнопку, даже если клик по изображению внутри кнопки
 		if (!target) { //чтобы только по кнопке срабатывал
 			return;
 		}
 		if (target.classList.contains('pin--0')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[0]), mapFilter);
 		}
 		if (target.classList.contains('pin--1')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[1]), mapFilter);
 		}
 		if (target.classList.contains('pin--2')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[2]), mapFilter);
 		}
 		if (target.classList.contains('pin--3')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[3]), mapFilter);
 		}
 		if (target.classList.contains('pin--4')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[4]), mapFilter);
 		}
 		if (target.classList.contains('pin--5')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[5]), mapFilter);
 		}
 		if (target.classList.contains('pin--6')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[6]), mapFilter);
 		}
 		if (target.classList.contains('pin--7')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[7]), mapFilter);
 		}
 		if (target.classList.contains('pin--8')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[8]), mapFilter);
 		}
 		if (target.classList.contains('pin--9')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[9]), mapFilter);
 		}
 		if (target.classList.contains('pin--10')) {
+			closeAd();
 			map.insertBefore(generateAd(window.loadedHotelData[10]), mapFilter);
 		}
 	})
@@ -292,7 +333,7 @@
 
 
 	// Заполнение поля адреса
-	
+
 
 	var PIN_WIDTH = 40;
 	var PIN_HEIGHT = 40;
@@ -350,7 +391,7 @@
 				y: moveEvt.clientY
 			}
 
-			//добавить в поле запись адреса!!!!!
+			//добавить в поле запись адреса
 			addressField.value = startCoords.x + ", " + startCoords.y;
 
 			mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
